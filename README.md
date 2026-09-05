@@ -403,4 +403,4 @@ Computer Science Engineering Student
 
 ## 📄 License
 
-No license is currently specified for this repository.
+This project is licensed under the **MIT License**. See the [`LICENSE`](LICENSE) file for the complete license text.
