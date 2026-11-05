@@ -163,8 +163,7 @@ def customer():
         else:
             print("Invalid mobile number!")
             continue
-    sam="INSERT INTO customers (id, name, phone_number) VALUES ({},'{}',{})".format(customer_id, a1, a3)
-    cur.execute(sam)
+    cur.execute("INSERT INTO customers (id, name, phone_number) VALUES (%s, %s, %s)", (customer_id, a1, a3))
     mycon.commit()
     while True:
         print(menu1)
@@ -807,8 +806,7 @@ def customer():
          
                         
                    
-                                    cur.execute("INSERT INTO c_payments(id,total_amount,method,payment_status)VALUES ({},{},'{}','{}')"
-                                                .format(customer_id,a12,me,tri) )
+                                    cur.execute("INSERT INTO c_payments(id,total_amount,method,payment_status) VALUES (%s, %s, %s, %s)", (customer_id, a12, me, tri))
                                     mycon.commit() 
                                     # After payment, return to main menu
                                     return
@@ -859,8 +857,7 @@ def customer():
                         """  )
                                                 tri="DONE"
                                                 me="BANK ACCOUNT"
-                                                cur.execute("INSERT INTO c_payments(id,total_amount,method,payment_status)VALUES ({},{},'{}','{}')"
-                                                            .format(customer_id,a12,me,tri) )
+                                                cur.execute("INSERT INTO c_payments(id,total_amount,method,payment_status) VALUES (%s, %s, %s, %s)", (customer_id, a12, me, tri))
                                                 mycon.commit()
                                                 # After payment, return to main menu
                                                 return
@@ -1204,8 +1201,7 @@ def seller():
                 """  )
                                 me="UPI"
                                 tri="DONE"
-                                cur.execute("INSERT INTO s_payments(id,total_amount,method,payment_status)VALUES ({},{},'{}','{}')"
-                                            .format(seller_id,Totalamount,me,tri) )
+                                cur.execute("INSERT INTO s_payments(id,total_amount,method,payment_status) VALUES (%s, %s, %s, %s)", (seller_id, Totalamount, me, tri))
                                 mycon.commit()
                                 # After payment, return to main menu
                                 return
@@ -1242,8 +1238,7 @@ def seller():
                                                                                            ***************************************************""")
                                                 me="BANK ACCOUNT"
                                                 tri="DONE"
-                                                cur.execute("INSERT INTO s_payments(id,total_amount,method,payment_status)VALUES ({},{},'{}','{}')"
-                                                            .format(seller_id,Totalamount,me,tri) )
+                                                cur.execute("INSERT INTO s_payments(id,total_amount,method,payment_status) VALUES (%s, %s, %s, %s)", (seller_id, Totalamount, me, tri))
                                                 mycon.commit() 
                                                 # After payment, return to main menu
                                                 return
@@ -1294,7 +1289,7 @@ def industrial_staff():
             y=s+'@'+x
             print("Password created:",y) 
             z=input("Qualification:")
-            c1.execute("Insert into workers values ('{}','{}','{}')".format(x,y,z))
+            c1.execute("INSERT INTO workers (Id, password, qualification) VALUES (%s, %s, %s)", (x, y, z))
             mycon.commit()
             print('')
             print("Added worker with ID",x,"successfully!")
@@ -1303,7 +1298,7 @@ def industrial_staff():
         n=int(input("Number of entries"))
         for i in range(n):
             y2=input("Enter Worker's ID:")
-            c1.execute("Delete from workers where Id = '{}'".format(y2))
+            c1.execute("DELETE FROM workers WHERE Id = %s", (y2,))
             mycon.commit()
             print("Deleted worker with ID",y2,"successfully")
 
@@ -1388,7 +1383,7 @@ else enter "2".""")
             if r=='1':
                 y3=int(input("Enter the complain number:"))
                 z=w6[y3-1]
-                c1.execute("Delete from complaint where complain = '{}'".format(z))
+                c1.execute("DELETE FROM complaint WHERE complain = %s", (z,))
                 mycon.commit()
                
 
@@ -1440,7 +1435,7 @@ else enter "2".""")
             if r=='1':
                 y5=int(input("Enter the demand number:"))
                 z5=w4[y5-1]
-                c1.execute("Delete from demand where demanded = '{}'".format(z5))
+                c1.execute("DELETE FROM demand WHERE demanded = %s", (z5,))
                 mycon.commit()
                 
     def admin_view_customerdetails(c1):
@@ -1497,7 +1492,7 @@ To delete customer details-Press 4
                 break
 
             if n==1:
-                c1.execute("select * from order_items where id={}".format(j))
+                c1.execute("SELECT * FROM order_items WHERE id = %s", (j,))
                 data=c1.fetchall()
                 oid=[] 
                 opr=[] 
@@ -1549,7 +1544,7 @@ To delete customer details-Press 4
                 
                 break
             elif n==2:
-                c1.execute("select * from c_payments where id={}".format(j))
+                c1.execute("SELECT * FROM c_payments WHERE id = %s", (j,))
                 data=c1.fetchall()
                 poid=[] 
                 pot=[] 
@@ -1595,7 +1590,7 @@ To delete customer details-Press 4
 
                 break
             elif n==3:
-                c1.execute("select * from order_items where id={}".format(j))
+                c1.execute("SELECT * FROM order_items WHERE id = %s", (j,))
                 data=c1.fetchall()
                 oid=[] 
                 opr=[] 
@@ -1642,7 +1637,7 @@ To delete customer details-Press 4
                         print('                                                       '+id_str+id_space+prod_str+prod_space+'        '+vehicle_str+vehicle_space+'    '+qty_str+qty_space+price_str)
                         print('                                                  '+'*'*90)
 
-                c1.execute("select * from c_payments where id={}".format(j))
+                c1.execute("SELECT * FROM c_payments WHERE id = %s", (j,))
                 data=c1.fetchall()
                 poid=[] 
                 pot=[] 
@@ -1690,9 +1685,9 @@ To delete customer details-Press 4
             elif n==4:
                 confirm = input("Are you sure you want to delete customer details? (yes/no): ")
                 if confirm.lower() == 'yes':
-                    c1.execute("DELETE FROM order_items WHERE id={}".format(j))
-                    c1.execute("DELETE FROM c_payments WHERE id={}".format(j))
-                    c1.execute("DELETE FROM customers WHERE id={}".format(j))
+                    c1.execute("DELETE FROM order_items WHERE id = %s", (j,))
+                    c1.execute("DELETE FROM c_payments WHERE id = %s", (j,))
+                    c1.execute("DELETE FROM customers WHERE id = %s", (j,))
                     mycon.commit()
                     print("Customer details deleted successfully!")
                 else:
@@ -1757,7 +1752,7 @@ To delete seller details-Press 4
                      break
 
                  if n==1:
-                     c1.execute("select * from purchased_items where id={}".format(j))
+                     c1.execute("SELECT * FROM purchased_items WHERE id = %s", (j,))
                      data=c1.fetchall()
                      pid=[] 
                      ppr=[] 
@@ -1804,7 +1799,7 @@ To delete seller details-Press 4
                      
                      break
                  elif n==2:
-                     c1.execute("select * from s_payments where id={}".format(j))
+                     c1.execute("SELECT * FROM s_payments WHERE id = %s", (j,))
                      data=c1.fetchall()
                      pooid=[] 
                      poot=[] 
@@ -1850,7 +1845,7 @@ To delete seller details-Press 4
 
                      break
                  elif n==3:
-                     c1.execute("select * from purchased_items where id={}".format(j))
+                     c1.execute("SELECT * FROM purchased_items WHERE id = %s", (j,))
                      data=c1.fetchall()
                      pid=[] 
                      ppr=[] 
@@ -1893,7 +1888,7 @@ To delete seller details-Press 4
                              print('                                                            '+id_str+id_space+prod_str+prod_space+qty_str+qty_space+price_str)
                              print('                                                           '+'*'*80)
 
-                     c1.execute("select * from s_payments where id={}".format(j))
+                     c1.execute("SELECT * FROM s_payments WHERE id = %s", (j,))
                      data=c1.fetchall()
                      pooid=[] 
                      poot=[] 
@@ -1941,9 +1936,9 @@ To delete seller details-Press 4
                  elif n==4:
                      confirm = input("Are you sure you want to delete seller details? (yes/no): ")
                      if confirm.lower() == 'yes':
-                         c1.execute("DELETE FROM purchased_items WHERE id={}".format(j))
-                         c1.execute("DELETE FROM s_payments WHERE id={}".format(j))
-                         c1.execute("DELETE FROM sellers WHERE id={}".format(j))
+                         c1.execute("DELETE FROM purchased_items WHERE id = %s", (j,))
+                         c1.execute("DELETE FROM s_payments WHERE id = %s", (j,))
+                         c1.execute("DELETE FROM sellers WHERE id = %s", (j,))
                          mycon.commit()
                          print("Seller details deleted successfully!")
                      else:
