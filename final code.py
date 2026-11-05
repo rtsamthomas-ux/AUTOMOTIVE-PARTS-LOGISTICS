@@ -1,9 +1,12 @@
+import os
+
 import mysql.connector as sqltor
 
-mycon= sqltor.connect(
-    host="localhost",
-    user="root",
-    password="root"
+mycon = sqltor.connect(
+    host=os.getenv("MYSQL_HOST", "localhost"),
+    port=int(os.getenv("MYSQL_PORT", "3306")),
+    user=os.environ["MYSQL_USER"],
+    password=os.environ["MYSQL_PASSWORD"],
 )
 cur = mycon.cursor()
 cur.execute("CREATE DATABASE IF NOT EXISTS automotive_db")

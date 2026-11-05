@@ -281,9 +281,16 @@ pip install mysql-connector-python
 
 Make sure MySQL Server is running locally.
 
-The current application expects a local MySQL connection and creates the database automatically if it does not already exist.
+The application creates the `automotive_db` database if it does not exist. Configure the connection with environment variables before starting the program:
 
-**Important:** The current source code contains a database password directly in the file. For a real project, replace this with an environment-variable or configuration-based approach and never commit real credentials to GitHub.
+```text
+MYSQL_HOST=localhost
+MYSQL_PORT=3306
+MYSQL_USER=your_mysql_user
+MYSQL_PASSWORD=your_mysql_password
+```
+
+Do not commit real database credentials to GitHub. Use a dedicated MySQL account with only the permissions the application needs instead of the database root account.
 
 ## ▶️ Running the Project
 
